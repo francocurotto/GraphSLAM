@@ -1,0 +1,30 @@
+\begin{tikzpicture}
+%\draw[help lines] grid(13,7);
+
+% robot poses
+\node[name= x0, robot, shape border rotate=0] at (0,0) {$\boldsymbol{x}_0$};
+\node[name= x1, robot, shape border rotate=45] at (3,1) {$\boldsymbol{x}_1$};
+
+% landmarks
+\node[name=m1, landmark] at (7,1) {$\boldsymbol{m}_1$};
+
+% odometry and measurements
+\begin{scope}[on background layer]
+\draw [odometry] (x0.center) -- (x1.center);
+\draw [odometry] (x1.center) -- (m1.center);
+\end{scope}
+
+% protocol values
+\begin{scope}[on background layer]
+\draw [|-|] (0, 0-1) -- (3, 0-1) node[midway, below] {$\Delta x$ odom};
+\draw [|-|] (0-1, 0) -- (0-1, 1) node[midway, left] {$\Delta y$ odom};
+\draw [dashed, gray] (x0.center) |- (x1.center);
+\draw [|-|] (3-0.7, 1+0.7) -- (5-0.7, 3+0.7) node[midway, left] {$\Delta x$ meas};
+\draw [|-|] (5+0.7, 3+0.7) -- (7+0.7, 1+0.7) node[midway, right] {$\Delta y$ meas};
+\draw [dashed, gray] (x1.center) -- (5,3) -- (m1.center);
+\draw [ thick, ->] ($(x1.center)+(1.3,0)$) arc [radius=1.3, start angle=0, end angle= 45] node[midway, right] {$\Delta \theta$ odom};
+\end{scope}
+
+\node at (0,3.7) {};
+
+\end{tikzpicture}

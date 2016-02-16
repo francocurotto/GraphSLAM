@@ -1,0 +1,36 @@
+\begin{tikzpicture}
+%\draw[help lines] grid(13,7);
+
+\pgfmathsetmacro{\angg}{-20}
+\pgfmathsetmacro{\ang}{-75}
+
+% robot poses
+\node[name= x0, robot, shape border rotate=0] at (0,0) {$\boldsymbol{x}_0$};
+%\node[name= x1, robot, shape border rotate=0] at (4,0) {$\boldsymbol{x}_1$};
+\node[name= x1, robot, shape border rotate=\angg] at ($(x0.center)+4*(cos \angg0, sin \angg0)$) {$\boldsymbol{x}_1$};
+\node[name= x2, robot, shape border rotate=\ang] at ($(x1.center)+4*(cos \ang,sin \ang)$) {$\boldsymbol{x}_1$};
+
+
+% landmarks
+\node[name=m1, landmark] at (2,2) {$\boldsymbol{m}_1$};
+\node[name=m2, landmark] at (0,-4) {$\boldsymbol{m}_2$};
+\node[name=m11, landmark] at ($(x1.center)+2.4*(cos 110, sin 110)$) {$\boldsymbol{m}_{a}$};
+\node[name=m22, landmark] at ($(x2.center)+4*(sin \ang,-cos \ang)$) {$\boldsymbol{m}_{b}$};
+
+% odometry and measurements
+\begin{scope}[on background layer]
+\draw [variance] (m1.center) circle [radius=1];
+\draw [variance] (m11.center) circle [radius=1];
+\draw [thick, color=yellow] (m1.center) circle [radius=1];
+\draw [variance] (m2.center) circle [radius=1];
+\draw [variance] (m22.center) circle [radius=1];
+\draw [thick, color=yellow] (m2.center) circle [radius=1];
+\draw [odometry] (x0.center) -- (x1.center);
+\draw [odometry] (x1.center) -- (x2.center);
+\draw [measurement] (x0.center) -- (m1.center);
+\draw [measurement] (x0.center) -- (m2.center);
+\draw [measurement] (x1.center) -- (m11.center);
+\draw [measurement] (x2.center) -- (m22.center);
+\end{scope}
+
+\end{tikzpicture}

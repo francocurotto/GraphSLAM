@@ -1,0 +1,8 @@
+*.png
+*.pdf
+*.pyc
+*~
+*.prof
+*.callgrind
+!python-helpers/v3-real-data/res/res_victoria.pdf
+!*res_victoria.pdf

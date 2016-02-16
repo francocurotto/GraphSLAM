@@ -1,0 +1,26 @@
+\begin{tikzpicture}
+%\draw[help lines] grid(13,7);
+
+% robot poses
+\node[name= x0, robot, shape border rotate=0] at (0,0) {$\boldsymbol{x}_0$};
+\node[name= x1, robot, shape border rotate=0] at (4,0) {$\boldsymbol{x}_1$};
+\node[name= x2, robot, shape border rotate=-90] at (4,-4) {$\boldsymbol{x}_1$};
+
+
+% landmarks
+\node[name=m1, landmark] at (2,2) {$\boldsymbol{m}_1$};
+\node[name=m2, landmark] at (0,-4) {$\boldsymbol{m}_2$};
+
+% odometry and measurements
+\begin{scope}[on background layer]
+\draw [variance] (m1.center) circle [radius=1];
+\draw [variance] (m2.center) circle [radius=1];
+\draw [odometry] (x0.center) -- (x1.center);
+\draw [odometry] (x1.center) -- (x2.center);
+\draw [measurement] (x0.center) -- (m1.center);
+\draw [measurement] (x0.center) -- (m2.center);
+\draw [measurement] (x1.center) -- (m1.center);
+\draw [measurement] (x2.center) -- (m2.center);
+\end{scope}
+
+\end{tikzpicture}

@@ -1,0 +1,27 @@
+\begin{tikzpicture}
+%\draw[help lines] grid(13,7);
+
+% robot poses
+\node[name= x0, gnode] at (0,6) {$\boldsymbol{0}$};
+\node[name=x1, gnode] at (3,5) {$\boldsymbol{1}$};
+\node[name=x2, gnode] at (6,6) {$\boldsymbol{2}$};
+\node[name=x3, gnode] at (7,2) {$\boldsymbol{3}$};
+\node[name=x4, gnode] at (2,1) {$\boldsymbol{4}$};
+\node[name=m1, gnode] at (3,3) {$\boldsymbol{5}$};
+\node[name=m2, gnode] at (9,5) {$\boldsymbol{6}$};
+
+\begin{scope}[on background layer]
+\draw [odometry] (x0.center) -- (x1.center);
+\draw [odometry] (x1.center) -- (x2.center);
+\draw [odometry] (x2.center) -- (x3.center);
+\draw [odometry] (x3.center) -- (x4.center);
+\draw [odometry] (x1.center) -- (m1.center);
+\draw [odometry] (x2.center) -- (m2.center);
+\draw [odometry] (x3.center) -- (m2.center);
+\draw [odometry] (x4.center) -- (m1.center);
+\end{scope}
+
+% nodes for image correction
+%\node [name=n1] at (0,-1) {};
+%\node [name=n2] at (10,0) {};
+\end{tikzpicture}
