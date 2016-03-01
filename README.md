@@ -18,6 +18,7 @@ This project was developed in linux platform, with C++11 and Python 2.7
 - doc:
     - Documentation: Code documentation
     - Memoria: Memoria (tesis) document explaining the work
+    - Presentation for thesis defense
     
 ## Compilation
 
