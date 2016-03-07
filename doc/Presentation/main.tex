@@ -41,6 +41,7 @@
 \includegraphics[width=0.8\textwidth]{img/assembly.jpg}\\
 \vspace{1em}
 \includegraphics[width=0.8\textwidth]{img/timbot.jpg}
+\pause
 \column{0.5\textwidth}
 \centering
 \textbf{Robots Now}\\
@@ -88,13 +89,14 @@
 The problem were an agent must simultaneously estimate its current position (localization), and construct a map of its environment (mapping).}
 \end{center}
 \end{block}
+\pause
 \begin{block}{Odometry and Measurements}
 Sensors can be used to:
 \begin{itemize}
 \item Keep track of the robot movements (odometry)
 \item Sense nearby objects positions (measurements)
 \end{itemize}
-Sensors are noisy. We can use probabilistic tool to improve sensors estimates.
+Sensors are noisy. We can use probabilistic methods to improve sensors estimates.
 \end{block}
 \begin{columns}
 \column{0.5\textwidth}
@@ -107,7 +109,89 @@ Sensors are noisy. We can use probabilistic tool to improve sensors estimates.
 \end{frame}
 
 \begin{frame}{GraphSLAM}
-GraphSLAM description
+\begin{block}{}
+GraphSLAM translate the SLAM problem into a graph.
+\begin{itemize}
+\item Nodes represents robot \textbf{poses} or \textbf{landmarks}.
+\item Edges represents \textbf{robot} odometry or \textbf{measurements}.
+\end{itemize}
+\end{block}
+\begin{center}
+\includegraphics<1>[width=0.5\textwidth]{tikz/graphslam.pdf}
+\includegraphics<2>[width=0.5\textwidth]{tikz/graph.pdf}
+\end{center}
+\begin{block}{}
+Goal: Find the nodes positions that most accurately represents the sensors data (edges). 
+\end{block}
+\end{frame}
+
+\begin{frame}{Mathematical Formulation of GraphSLAM}
+\begin{block}{}
+We want to find the maximum likelihood of posterior probability:
+\begin{equation*}
+p(\bs{x}_{0:k},\bs{m}|\bs{z}_{1:k},\bs{u}_{1:k})
+\end{equation*} 
+\pause
+
+Which can be formulated as:
+\begin{equation*}
+F(\bs{y}) \defi -\log(p(\bs{y}|\bs{z}_{1:k},\bs{u}_{1:k})) = \sum_{\left<i,j\right>\in\Ee}\bs{e}_{ij}(\bs{y})^T\bs{\Omega}_{ij} \bs{e}_{ij}(\bs{y}) 
+\end{equation*}
+\pause
+\end{block}
+
+\begin{block}{}
+\begin{itemize}
+\item $\bs{y}$: state vector (junction of robot poses and landmarks positions)
+\item $\bs{z_{1:k}}$: landmarks measurements
+\item $\bs{u_{1:k}}$: odometry measurements
+\item $\bs{e_{ij}}$: error function (difference between current estimate and data)
+\item $\bs{\Omega_{ij}}$: Information matrix of measurements
+\end{itemize}
+\end{block}
+\end{frame}
+\pause
+
+\begin{frame}{Mathematical Formulation of GraphSLAM}
+\begin{block}{Gauss-Newton algorithm}
+\begin{itemize}
+\item 1$^\circ$ order Taylor expansion around current estimate:
+\begin{equation}
+F(\breve{\bs{y}}+\bs{\Delta y}) = k + 2\bs{b} \bs{\Delta y} + \bs{\Delta y}^T \bs{H} \bs{\Delta y}
+\label{eq:taylor}
+\end{equation}
+\item Minimization of~\label{eq:taylor}:
+\begin{equation}
+\bs{H \Delta y}^* = -\bs{b}
+\label{eq:linear-system}
+\end{equation}
+\item Estimate update:
+\begin{equation}
+\bs{y}^* = \breve{\bs{y}}+ \bs{\Delta y}^*
+\label{eq:update}
+\end{equation}
+\end{itemize}
+\end{block}
+
+\begin{block}{}
+\begin{itemize}
+\item $\breve{\bs{y}}$: current estimate
+\item $\bs{\Delta y}$: small disturbance around $\breve{\bs{y}}$
+\item $\bs{b}$: Information vector
+\item $\bs{H}$: Information matrix
+\item $\bs{y}^*$: New estimate
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Structure of the Linearized System}
+Information matrix $\bs{H}$ is intrinsically \textit{\textbf{sparse}}.
+\vspace{1em}
+
+\centering
+\includegraphics<1>[width=\textwidth]{tikz/matrix1.pdf}
+\includegraphics<2>[width=\textwidth]{tikz/matrix2.pdf}
+\includegraphics<3>[width=\textwidth]{tikz/matrix3.pdf}
 \end{frame}
 
 \begin{frame}{Implementation}
