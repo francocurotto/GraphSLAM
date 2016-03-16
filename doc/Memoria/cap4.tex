@@ -1,14 +1,14 @@
 \chapter{Results}
 \label{chap:results}
 
-In this chapter the results of the GraphSLAM algorithm are presented for different test scenarios. In section~\ref{sec:known-asso-res} the algorithm is tested for the simple case of known data association and simulated data. A parameters variation analysis is made, and their effect in the path estimation is shown. In section~\ref{sec:unknown-asso-res} a similar analysis is performed, but for the case of unknown data association. In this case, new parameters related to the data association algorithm are tested. Finally in section~\ref{sec:real-data-res}, the GraphSLAM algorithm is run in more realistic data. This data includes robot simulated with Gazebo\footnote{http://gazebosim.org/}, a much more realistic robot simulator, and data obtained from real robots in outdoor environments. 
+In this chapter the results of the GraphSLAM algorithm are presented for different test scenarios. In Section~\ref{sec:known-asso-res} the algorithm is tested for the simple case of known data association and simulated data. A parameters variation analysis is made, and their effect in the path estimation is shown. In Section~\ref{sec:unknown-asso-res} a similar analysis is performed, but for the case of unknown data association. In this case, new parameters related to the data association algorithm are tested. Finally in Section~\ref{sec:real-data-res}, the GraphSLAM algorithm is run in more realistic data. This data includes a robot simulated with Gazebo\footnote{http://gazebosim.org/}, a much more realistic robot simulator, and data obtained from real robots in outdoor environments. 
 
-Through this tests several parameters and methods must be chosen for the algorithm to work properly. To limit the scope of this work, the sparse solver and the optimization algorithm are fixed and used in all the following tests. CSpase library and the Cholesky decomposition is used for the sparse solver, and the Levenberg-Marquardt method is used as the optimization algorithm. Also whenever the robust kernel method is used, Huber is the chosen kernel function (see section~\ref{sec:known-asso-imp}). 
+Through these tests several parameters and methods must be chosen for the algorithm to work properly. To limit the scope of this work, the sparse solver and the optimization algorithm are fixed and used in all the following tests. CSpase library and the Cholesky decomposition is used for the sparse solver, and the Levenberg-Marquardt method is used as the optimization algorithm. Also whenever the robust kernel method is used, Huber is the chosen kernel function (see Section~\ref{sec:known-asso-imp}). 
 
 \section{Known Data Association}
 \label{sec:known-asso-res}
 
-The known data association case is the easiest one of the three scenarios, because correspondence between landmarks is given a priori. In this case the user must simply set the parameters and run the solver as stated in Algorithm~\ref{alg:known-correspondence}. 
+The known data association case is the easiest one of the three scenarios, because correspondence between landmarks is given a priori. In this case Algorithm~\ref{alg:known-correspondence} is used. 
 
 The parameters to be set in this case are the following:
 
@@ -45,7 +45,7 @@ This means that the robot experiences same uncertainty in the $x$ and $y$ axis, 
 
 The simulation is constrained to a 2D world with $x\in[-15,15]$, $y\in[-15,15]$. At each step the simulator moves the robot 1 unit of distance and in turns randomly an angle of $\theta=0^\circ$, $90^\circ$, or $-90^\circ$. All simulations start from at $(0,0)$.
 
-A kernel width of 1 unit is chosen heuristically, looking at the distance between landmarks. 
+A kernel width of 1 unit is chosen heuristically, looking at the distance between landmarks. Intuitively, the user should set the kernel width to a distance in which two landmarks are unlikely to be the same, and therefore it corresponds to an outlier.
 
 The results of the test are shown in Figure~\ref{fig:test-i}. In Figure~\ref{fig:test-ia} the initial guess is plotted on the left, and the posterior estimation after the solver on the right. The groundtruth is added in both graphs for comparison. Landmarks not observed by the robot are not shown.  It can be seen that the path of the initial guess rapidly diverges from the real solution. On the other hand, the solver estimation fits quite well with the groundtruth, both for the path and the landmarks.
 
@@ -55,7 +55,7 @@ To have a more quantitative view of the error made by the solver, the cumulative
 error (i) = \frac{1}{i} \sum_{i} ||pos_{GT}-pos_{est}||
 \end{equation} 
 
-Where $i$ is the path's timestep. $pos_{GT}$ and $pos_{est}$ are the groundtruth and estimated position respectively. Then the error is the sum of the euclidean distance of both positions, normalized by the number of steps. 
+Where $i$ is the path's timestep. $pos_{GT}$ and $pos_{est}$ are the groundtruth and estimated position respectively. Then the error is the sum of the Euclidean distance of both positions, normalized by the number of steps. 
 
 It can be seen that the error start increasing early in the path, but then it get stabilized. This is the effect of aggregating the information of the measurements and running the optimizer. As long as the robot keep measuring the same landmarks, it can maintain its error low. 
 
@@ -305,11 +305,11 @@ Along with the parameters used in the known correspondence case, the following n
 \item $ps$: Pose skipping.
 \end{itemize}
 
-Where $\chi$ and $dt$ are the thresholds used in Algorithm~\ref{alg:incremental-data-association}. $io$ is the number of incremental optimization between two full optimizations, and $ps$ is the number of pose between optimizations, both form Algorithm~\ref{alg:final}.
+Where $\chi$ and $dt$ are the thresholds used in Algorithm~\ref{alg:incremental-data-association}. $io$ is the number of incremental optimizations between two full optimizations, and $ps$ is the number of poses between optimizations, both form Algorithm~\ref{alg:final}.
 
-\nameref{sec:test-vii} show the results for a successful test with unknown data association. Notice that in the initial guess there are several more landmarks that in the groundtruth. That is because the initial guess consider every single measurement as an independent landmark. However in the result of the solver, the algorithm is able to associate the the measurements with the corresponding landmark, and correct the path of the robot. Nevertheless there are 4 cases that is unable to associate correctly.
+\nameref{sec:test-vii} show the results for a successful test with unknown data association. Notice that in the initial guess there are several more landmarks than in the groundtruth. That is because the initial guess consider every single measurement as an independent landmark. However in the result of the solver, the algorithm is able to associate the the measurements with the corresponding landmark, and correct the path of the robot. Nevertheless there are 4 cases that are unable to be associated correctly.
 
-The parameter $dt$ is set to $\infty$ so no distant test is performed. In table~\ref{tab:test-vii}, variable $t$ correspond to the total time of the algorithm. 
+The parameter $dt$ is set to $\infty$ so no distant test is performed. In Table~\ref{tab:test-vii}, variable $t$ correspond to the total time of the algorithm. 
 
 \afterpage{
 \clearpage
@@ -458,7 +458,7 @@ In~\nameref{sec:test-ix} and \nameref{sec:test-x} $\chi$ is set to 1 and 3 respe
 }
 %\clearpage
 
-In~\nameref{sec:test-xi} $\chi$ gets the value of $\infty$ and $dt=1$, so that in this case the algorithm associate landmarks using the distant test instead of the correspondence test. Every landmark at a distance of 1 unit will be automatically associated. Looking at Figure~\ref{fig:test-xia} it can be seen that now all landmarks are correctly associated. However Figure~\ref{fig:test-xib} shows that the estimation has a greater cumulative error. Also, the distant test is faster than the correspondence test, taking only $5[s]$. Therefore a trade-off exists between using the distant test and the correspondence test as a mean to solve unknown association.
+In~\nameref{sec:test-xi} $\chi$ gets the value of $\infty$ and $dt=1$, so that in this case the algorithm associates landmarks using the distant test instead of the correspondence test. Every landmark at a distance of 1 unit will be automatically associated. Looking at Figure~\ref{fig:test-xia} it can be seen that now all landmarks are correctly associated. However Figure~\ref{fig:test-xib} shows that the estimation has a greater cumulative error. Also, the distant test is faster than the correspondence test, taking only $5[s]$. Therefore a trade-off exists between using the distant test and the correspondence test as a means to solve unknown association.
 
 \afterpage{
 \clearpage
@@ -538,7 +538,7 @@ In~\nameref{sec:test-xii} the pose skip parameter is increase to $ps=100$. the i
 \section{Real Data}
 \label{sec:real-data-res} 
 
-In this section the correctness of the algorithm is proven for more realistic data. The size of the data is much larger than the previous cases, the number of poses in a path are in the order of thousands and ten thousands. Unfortunately the amount of data is so large, that it becomes infeasible to apply the correspondence test. For this reason, only the distant test is used. Moreover, the data presents undesired properties like non-Gaussian noise and false alarms, nevertheless it'll be shown that it's still possible to apply the algorithm and get good results.
+In this section the correctness of the algorithm is proven for more realistic data. The size of the data is much larger than the previous cases, the number of poses in a path are in the order of thousands and ten thousands. Unfortunately the amount of data is so large, that it becomes infeasible to apply the correspondence test, because it so computationally expensive it takes several hours to run the algorithm. For this reason, only the distant test is used. Moreover, the data presents undesired properties like non-Gaussian noise and false alarms, nevertheless it'll be shown that it's still possible to apply the algorithm and get good results.
 
 \subsection{Husky a200 Robot}
 
@@ -546,7 +546,7 @@ The first of these test is a Husky a200 Robot simulated in Gazebo. Since this te
 
 The parameters of the algorithm are presented it Table~\ref{tab:test-xiii}. In this case the information parameters $i_{op}$, $i_{oa}$, and $i_{lp}$ are the assumed uncertainty that better fit the robot model. Since no knowledge was acquired about the robot, these parameters were chosen by trial and error. 
 
-The result are shown in Figure~\ref{fig:test-xiii}. It can be seen that the algorithm can correctly predict the robot path. Most of the landmarks are also found, but there a lot of false positives, possibly generated by sensor malfunctions, spurious measurements, or moving objects. A possible way to get rid of these false alarms is to apply a policy of elimination of landmarks if they aren't measured a certain number of times. Nevertheless, the false alarms don't affect greatly the results of the estimation.
+The result are shown in Figure~\ref{fig:test-xiii}. It can be seen that the algorithm can correctly predict the robot path. Most of the landmarks are also found, but there a lot of false positives, possibly generated by sensor malfunctions, spurious measurements, or moving objects. A possible way to get rid of these false alarms is to apply a policy of elimination of landmarks if they are not measured a certain number of times. Nevertheless, the false alarms do not affect greatly the results of the estimation.
 
 \afterpage{
 \clearpage
@@ -586,7 +586,7 @@ The result are shown in Figure~\ref{fig:test-xiii}. It can be seen that the algo
 
 \subsection{Parque O'Higgins}
 
-This dataset correspond to data taken in Parque O'Higgins by a robot from Universidad de Chile. Since this is real data there is no groundtruth with which compare the results. However, the robot was controlled so that it return to the starting position at the end of the path, so it's possible to check the correctness of the algorithm by looking at the robot's final position. Also, since there is no groudtruth there no way to known the correct amount to landmarks in the map.
+This dataset corresponds to data taken in Parque O'Higgins by a robot from Universidad de Chile. Since this is real data there is no groundtruth with which compare the results. However, the robot was controlled so that it return to the starting position at the end of the path, so it is possible to check the correctness of the algorithm by looking at the robot's final position. Also, since there is no groudtruth there no way to known the correct amount to landmarks in the map.
 
 The results are shown in~\nameref{sec:test-xiv}, along with the parameters used in the test. It can be seen that in the initial guess the robot doesn't return to the starting position (0,0), however it does when the algorithm is applied, thus proving the correctness of the estimate. Due to the large size of the data the algorithm took 4 hours to finish.
 
@@ -620,9 +620,9 @@ The results are shown in~\nameref{sec:test-xiv}, along with the parameters used 
 %\pagebreak
 \subsection{Victoria Park}
 
-The Victoria Park\footnote{Avaliable in \url{http://www.mrpt.org/Dataset_The_Victoria_Park}} is as commonly used datatest to test algorithms related to localization, mapping and SLAM. Again no real groundtruth of the data exist, however in this case the results can be compared with ones obtained by similar algorithms. 
+The Victoria Park\footnote{Avaliable in \url{http://www.mrpt.org/Dataset_The_Victoria_Park}} is as commonly used datatest to test algorithms related to localization, mapping and SLAM. No real groundtruth of the map exists, however in this case the results can be compared with ones obtained by similar algorithms. 
 
-\nameref{sec:test-xv} show the results of the algorithm in the Victoria Park dataset. In Figure~\ref{fig:victoria-graphslam-isam} the results are compared with the iSAM algorithm~\cite{isam} for the same dataset. It can be appreciated the resemblance between the two results. The mayor difference is the number of landmarks, since this implementation of GraphSLAM doesn't have a way to eliminate false alarms, they will stay forever in the map. The mayor disadvantage of the GraphSLAM algorithm is the computation time, due to the size of the dataset, it took 10 hours to finish.
+\nameref{sec:test-xv} show the results of the algorithm in the Victoria Park dataset. In Figure~\ref{fig:victoria-graphslam-isam} the results are compared with the iSAM algorithm~\cite{isam} for the same dataset. It can be appreciated the resemblance between the two results. The main difference is the number of landmarks, since this implementation of GraphSLAM does not have a way to eliminate false alarms, they will stay forever in the map. The main disadvantage of the GraphSLAM algorithm is the computation time, due to the size of the dataset, it took 10 hours to finish.
 
 \afterpage{
 \clearpage
@@ -662,7 +662,8 @@ The Victoria Park\footnote{Avaliable in \url{http://www.mrpt.org/Dataset_The_Vic
     \\
     \centering
     \begin{subfigure}[b]{0.5\textwidth}
-    \includegraphics[width=\textwidth]{imagenes/victoria-isam.png}
+    \hspace{-2cm}
+    \includegraphics[width=\textwidth, angle=-36]{imagenes/victoria-isam.png}
     \caption{Results iSAM in the Victoria Park dataset~\cite{isam}.}
     \label{fig:victoria-isam}
     \end{subfigure}

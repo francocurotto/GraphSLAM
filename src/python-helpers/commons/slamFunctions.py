@@ -39,22 +39,8 @@ def plotGuess (gtFilename, guessFilename, figFilename):
     gtData = slamData(gtFilename)
     guessData = slamData(guessFilename)
     
-    lw = 3
-    ms = 8
-    
-    if gtData is not None:
-        gtRobPlt, = plt.plot(gtData.poseX, gtData.poseY, '.-', color = '#bbbbf9', linewidth = lw, markersize = ms, label='GT robot path')
-    lanPlt, = plt.plot(guessData.landmarkX, guessData.landmarkY, 'r+', linewidth = lw, markersize = ms, label='landmarks')
-    robPlt, = plt.plot(guessData.poseX, guessData.poseY, 'b-', linewidth = lw, markersize = ms, label='robot path')
-    if gtData is not None:
-        gtLanPlt, = plt.plot(gtData.landmarkX, gtData.landmarkY, '.', color = '#800000', linewidth = lw, markersize = ms, label='GT landmarks')
-    
     ax = plt.axes()
-    ax.grid(True)
-    ax.set_title("Initial Guess")
-    ax.relim()
-    ax.autoscale_view()
-    ax.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+    makeSubplot(ax, gtData, guessData, "Initial Guess", True)
     plt.savefig(figFilename + ".pdf", bbox_inches='tight')
     
 def plotResults(gtFilename, guessFilename, optFilename, figFilename, suffix=""):
@@ -91,7 +77,8 @@ def plotResults(gtFilename, guessFilename, optFilename, figFilename, suffix=""):
     plt.savefig(figFilename + suffix + ".pdf", bbox_inches='tight')
     
     # plot path error
-    pathPlot(gtData, optData, figFilename, suffix)
+    if len(gtData.poseX) == len(optData.poseX):
+        pathPlot(gtData, optData, figFilename, suffix)
     
 def makeSubplot(ax, gtData, slamData, title, useLegend):
     """
@@ -110,18 +97,26 @@ def makeSubplot(ax, gtData, slamData, title, useLegend):
     """
     lw = 2
     ms = 8
-    if gtData is not None:
-        gtRobPlt, = ax.plot(gtData.poseX, gtData.poseY, '.-', color = '#bbbbf9', linewidth = lw, markersize = ms, label='GT robot path')
-    lanPlt, = ax.plot(slamData.landmarkX, slamData.landmarkY, 'r+', linewidth = lw, markersize = ms, label='landmarks')
-    robPlt, = ax.plot(slamData.poseX, slamData.poseY, 'b-', linewidth = lw, markersize = ms, label='robot path')
-    if gtData is not None:
-        gtLanPlt, = ax.plot(gtData.landmarkX, gtData.landmarkY, '.', color = '#800000', linewidth = lw, markersize = ms, label='GT landmarks')
+
+    gtRobPlt, = ax.plot(gtData.poseX, gtData.poseY, '.-', color = '#bbbbf9', linewidth = lw, markersize = ms, label='Ground truth robot path')
+    lanPlt, = ax.plot(slamData.landmarkX, slamData.landmarkY, 'r+', linewidth = lw, markersize = ms, label='Estimated landmarks')
+    robPlt, = ax.plot(slamData.poseX, slamData.poseY, 'b-', linewidth = lw, markersize = ms, label='Estimated robot path')
+    gtLanPlt, = ax.plot(gtData.landmarkX, gtData.landmarkY, '.', color = '#800000', linewidth = lw, markersize = ms, label='Ground truth landmarks')
     ax.grid(True)
     ax.set_title(title)
     ax.relim()
     ax.autoscale_view()
+    handles, labels = ax.get_legend_handles_labels()
+    newLabels = []
+    newHandles = []
+    if len(gtData.poseX) != 0:
+        newLabels.append(labels[0]); newHandles.append(handles[0])
+    if len(gtData.landmarkX) != 0:
+        newLabels.append(labels[3]); newHandles.append(handles[3])
+    newLabels.append(labels[2]); newHandles.append(handles[2])
+    newLabels.append(labels[1]); newHandles.append(handles[1])
     if useLegend:
-        ax.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+        ax.legend(newHandles, newLabels, bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
         
 def pathPlot(gtData, optData, figFilename, suffix=""):
     """
@@ -163,29 +158,3 @@ def pathPlot(gtData, optData, figFilename, suffix=""):
     plt.ylim([0, max(pathError)])
     #plt.savefig(figFilename + "_path.png", bbox_inches='tight')
     plt.savefig(figFilename + suffix + "_path.pdf", bbox_inches='tight')
-    
-def makeRealPlots (guessPath, optPath, figPath, suffix=""):
-    """
-    Plots initial guess and optimized results of SLAM (real) problem.
-    
-    Parameters
-    ----------
-    guessFilename: string
-                   path for initial guess data
-     optFilename: string
-                  path for optimized result data
-    figFilename: string
-                 path for output figure (without extension) 
-    suffix: string, optional
-            string to append in figure's name
-    """
-    # get data from file
-    guessData = slamData(guessPath)
-    optData = slamData(optPath)
-    f, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
-    makeSubplot(ax1, None, guessData, "Initial Guess", False)
-    makeSubplot(ax2, None, optData, "After Solver", True)
-    
-    # make figure
-    plt.savefig(figPath + suffix + ".pdf", bbox_inches='tight')
-    #plt.show()

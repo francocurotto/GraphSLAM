@@ -1,18 +1,17 @@
 \documentclass[upright, contnum]{umemoria}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
 \depto{DEPARTAMENTO DE INGENIERÍA ELÉCTRICA}
 \author{FRANCO ANDREAS CUROTTO MOLINA}
-\title{GRAPHSLAM ALGORITHM IMPLEMENTATION FOR SOLVING THE PROBLEM OF SLAM}
+\title{GRAPHSLAM ALGORITHM IMPLEMENTATION FOR SOLVING SIMULTANEOUS LOCALIZATION AND MAPPING}
 \auspicio{}
 \date{DICIEMBRE 2015}
 \guia{MARTIN ADAMS}
 \carrera{INGENIERO CIVIL ELÉCTRICO}
 \memoria{MEMORIA PARA OPTAR AL TÍTULO DE}
 \comision{\ Marcos Eduardo Orchard Concha}{\ Jorge Felipe Silva Sánchez} %{\ }
-
-\usepackage{lipsum}
-
-\usepackage[latin1]{inputenc}
-\usepackage[T1]{fontenc}
 
 \input{packages.tex}
 \newcommand{\estWidth}{0.8}
@@ -25,17 +24,18 @@
 \maketitle
 
 \begin{abstract}
-SLAM (Simultaneous Localization and Mapping) is the problem of concurrently estimate a robot (or other agent) position and the map the robot is generating of the environment. It is consider to be a core concept in mobile robotics, and fundamental to achieve truly autonomous systems. 
+SLAM (Simultaneous Localization and Mapping) is the problem of concurrently estimating a robot's (or other agent's) position and the map being generated of the environment. It is considered to be a core concept in mobile robotics, and a fundamental one to achieve truly autonomous systems. 
 
-Among the many solution that has been proposed for solving SLAM, graph based approaches have gain significant interest from researches in the recent years. These solutions presents various advantages, such as, the capability to handle large amount of data, and to retrieve the whole robot trajectory, rather than just the last position. A particular implementation of this approach is the GraphSLAM algorithm, first presented by Thrun and Montemerlo in 2006.
+Among the many solutions that have been proposed for solving SLAM, graph based approaches have gained significant interest from researches in the recent years. These solutions present various advantages, such as, the capability to handle large amounts of data, and to retrieve the complete robot trajectory, rather than just the last position. A particular implementation of this approach is the GraphSLAM algorithm, first presented by Thrun and Montemerlo in 2006.
 
-In the present work a GraphSLAM algorithm is implemented for solving the SLAM problem in a two dimensional scenario. The main objective of this work is to provide of a widely accepted SLAM solution for making benchmark comparisons to newer SLAM algorithms. The implementation uses the g$^2$o framework as a tool for nonlinear least square optimization.
+In this thesis a GraphSLAM algorithm is implemented for solving the SLAM problem in a two dimensional scenario. The main objective of this work is to provide a widely accepted SLAM solution for making benchmark comparisons to newer SLAM algorithms. The implementation uses the g$^2$o framework as a tool for nonlinear least squares optimization.
 
-The GraphSLAM implementation is able to solve SLAM with known and unknown data association. This means that even when the robot has no knowledge of the origin of measurements, it can associate to measurements from the same landmark by means of probabilistic estimation. The algorithm also uses a kernel method for robust estimation against outliers. In order to improve the algorithm computational time, several strategies were designed to efficiently test the association between landmarks, and run the optimizations. 
+The GraphSLAM implementation is able to solve SLAM with known and unknown data association. This means that even when the robot has no knowledge of the origin of measurements, it can associate measurements to states by means of probabilistic estimation. The algorithm also uses a kernel-based method for robust estimation against outliers. In order to improve the algorithm's computational time, several strategies were designed to efficiently test the association between landmarks, and run the optimizations. 
 
-The final implementation was tested with simulated and real data, in the case of known and unknown data association. It worked successfully in all the test cases, being able to estimate the robot path and the environment map with a low error. The main advantage of the algorithm are the high accuracy and the available number of parameters to accommodate it to a wide range of scenarios. The mayor drawbacks are the algorithm computational time for large dataset, and the inability to deal with large amount of false alarms. 
+The final implementation was tested with simulated and actual data, in the case of known and unknown data association. It worked successfully in all the test cases, being able to estimate the robot path and the environment map with small error. The main advantages of the algorithm are the high accuracy, and the 
+high level of customization to a wide range of scenarios given by its parameters selection. The major drawbacks are the algorithm's computational time for large dataset, and the inability to deal with large amounts of false alarms. 
 
-Finally, future work is suggested in order to improve the implementation current performance. In particular, modifications are suggested to increase convergence speed, and a method for dealing with false positives is proposed.   
+Finally, future work is suggested to improve the current performance. In particular, modifications are suggested to increase convergence speed, and for dealing with false positives.   
 \end{abstract}
 
 \begin{dedicatoria} % opcional
@@ -45,7 +45,7 @@ A mi familia
 \begin{thanks} % opcional
 I would like to thank professor Martin Adams for giving me the opportunity to work in the thrilling and challenging field of robotics. This project has given me a very useful experience about the scientific investigation, and work in general.
 
-I would also like to thank my coworkers in the AMTC laboratory, especially Keith Leung and Felipe Inostroza. Your constant help, support and review of my work allowed me to make a much better project than I could have achieved on my own. Also, thank you for providing me with sample codes and dataset for the project, it made my work much easier.
+I would also like to thank my co-workers in the AMTC laboratory, especially Keith Leung and Felipe Inostroza. Your constant help, support and review of my work allowed me to make a much better project than I could have achieved on my own. Also, thank you for providing me with sample codes and datasets for the project. It made my work much easier.
 \end{thanks}
 \cleardoublepage
 

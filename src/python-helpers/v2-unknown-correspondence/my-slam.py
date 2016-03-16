@@ -35,7 +35,7 @@ interOpt = 400
 simSteps = 400
 disTest = 0
 kernelWidth = 1
-poseSkip = 10
+poseSkip = 100
 
 # compile
 buildPath = "../../graphSLAM/build/"

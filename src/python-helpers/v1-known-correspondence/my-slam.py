@@ -25,12 +25,12 @@ from g2o2lab import *
 
 # variables
 g2oIterations = 20
-nlandmarks = 30
-simSteps = 400
+nlandmarks = 40
+simSteps = 300
 infoOdomPos = 1000
-infoOdomAng = 10000
+infoOdomAng = 1000
 infoPointSen = 1000
-kernelWidth = 1
+kernelWidth = 0.1
 
 # run g2o tests
 start_time = time.time()
@@ -72,5 +72,5 @@ print "Total time tests: " + str(elapsed_time) + " [s]"
 g2o2lab(guessOutPath, optPath, "res_lab/")
 
 # plot results
-plotGuess(simPath, guessOutPath, "res/guess"+ suffix)
+#plotGuess(simPath, guessOutPath, "res/guess"+ suffix)
 plotResults(simPath, guessOutPath, optPath, figPath, suffix)
