@@ -37,6 +37,8 @@
 %\RequirePackage[spanish, es-nolists, es-lcroman]{babel} % Lenguaje
 \RequirePackage[pdfpagelabels]{hyperref} % Links y numeracion del PDF
 \RequirePackage{listings} % Codigo Fuente
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
 
 %% Lenguaje
 %\addto\captionsspanish{\renewcommand\tablename{Tabla}}

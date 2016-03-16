@@ -59,6 +59,19 @@ Where $i$ is the path's timestep. $pos_{GT}$ and $pos_{est}$ are the groundtruth
 
 It can be seen that the error start increasing early in the path, but then it get stabilized. This is the effect of aggregating the information of the measurements and running the optimizer. As long as the robot keep measuring the same landmarks, it can maintain its error low. 
 
+In the next tests all the information parameters of the robot are decreased simultaneously. Is intended to show the effect in the estimation when adding uncertainty to the robot.
+
+\nameref{sec:test-ii}, \nameref{sec:test-iii}, and \nameref{sec:test-iv}, shows the results when $i_{op}=i_{oa}=i_{lp}=100$, $i_{op}=i_{oa}=i_{lp}=10$, and $i_{op}=i_{oa}=i_{lp}=1$ respectively.
+
+%It can be seen that the algorithm can retrieve the path with relative success when the information is 100 and 10, even when the initial guess is very far off. Only when the information is 1, the algorithm breaks.
+
+It can be seen that the estimated path gradually degrades as the the information decrease. Finally when the information is 1, the algorithm breaks.
+
+\nameref{sec:test-v} shows the effect running the algorithm with a low number of iterations. In this case $it=1$. It can be seen that the algorithm was not able to converge properly, in contrast to~\nameref{sec:test-i}.
+
+In~\nameref{sec:test-vi} the kernel width was reduced to $k_w=0.1$, meaning the errors are suppressed at a shorter distance. It can be seen that the new width actually improves the results, getting a normalized error for the full path of around 0.08.
+
+In terms of speed the algorithm performs quite fast, taking around $1[s]$ for all the tests.
 
 \afterpage{
 \clearpage
@@ -95,16 +108,8 @@ $n_p$ & $n_l$ & $i_{op}$ & $i_{oa}$ & $i_{lp}$ & $it$ & $k_w$\\
 }
 %\clearpage
 
-In the next test all the information parameters of the robot are decreased simultaneously. Is intended to show the effect in the estimation when adding uncertainty to the robot.
-
-\nameref{sec:test-ii}, \nameref{sec:test-iii}, and \nameref{sec:test-iv}, shows the results when $i_{op}=i_{oa}=i_{lp}=100$, $i_{op}=i_{oa}=i_{lp}=10$, and $i_{op}=i_{oa}=i_{lp}=1$ respectively.
-
-%It can be seen that the algorithm can retrieve the path with relative success when the information is 100 and 10, even when the initial guess is very far off. Only when the information is 1, the algorithm breaks.
-
-It can be seen that the estimated path gradually degrades as the the information decrease. Finally when the information is 1, the algorithm breaks.
-
-%\afterpage{
-%\clearpage
+\afterpage{
+\clearpage
 \subsubsection{Test II}
 \label{sec:test-ii}
 
@@ -136,7 +141,7 @@ It can be seen that the estimated path gradually degrades as the the information
     \caption{Results for Test II.}
     \label{fig:test-ii}
 \end{figure}
-%}
+}
 
 \afterpage{
 \clearpage
@@ -210,9 +215,6 @@ It can be seen that the estimated path gradually degrades as the the information
 }
 %\clearpage
 
-\pagebreak
-\nameref{sec:test-v} shows the effect running the algorithm with a low number of iterations. In this case $it=1$. It can be seen that the algorithm was not able to converge properly, in contrast to~\nameref{sec:test-i}.
-
 \afterpage{
 \clearpage
 \subsubsection{Test V.}
@@ -248,8 +250,6 @@ It can be seen that the estimated path gradually degrades as the the information
 \end{figure}
 }
 %\clearpage
-
-In~\nameref{sec:test-vi} the kernel width was reduced to $k_w=0.1$, meaning the errors are suppressed at a shorter distance. It can be seen that the new width actually improves the results, getting a normalized error for the full path of around 0.08.
 
 \afterpage{
 \clearpage
@@ -287,8 +287,6 @@ In~\nameref{sec:test-vi} the kernel width was reduced to $k_w=0.1$, meaning the 
 }
 %\clearpage
 
-In terms of speed the algorithm performs quite fast, taking around $1[s]$ for all the tests.
-
 \pagebreak
 \section{Unknown Data Association}
 \label{sec:unknown-asso-res}
@@ -310,6 +308,13 @@ Where $\chi$ and $dt$ are the thresholds used in Algorithm~\ref{alg:incremental-
 \nameref{sec:test-vii} show the results for a successful test with unknown data association. Notice that in the initial guess there are several more landmarks than in the groundtruth. That is because the initial guess consider every single measurement as an independent landmark. However in the result of the solver, the algorithm is able to associate the the measurements with the corresponding landmark, and correct the path of the robot. Nevertheless there are 4 cases that are unable to be associated correctly.
 
 The parameter $dt$ is set to $\infty$ so no distant test is performed. In Table~\ref{tab:test-vii}, variable $t$ correspond to the total time of the algorithm. 
+
+In the next tests the threshold $\chi$ is modified. In~\nameref{sec:test-viii} the threshold is set to a very low value $\chi=10^{-100}$. It can be seen that the algorithm merges non equivalent landmarks, thus causes estimate divergence.
+In~\nameref{sec:test-ix} and \nameref{sec:test-x} $\chi$ is set to 1 and 3 respectively. In these cases the thresholds are so high that the algorithm is unable to associate all the equivalent landmarks. This cause that the estimated path gradually drift.
+
+In~\nameref{sec:test-xi} $\chi$ gets the value of $\infty$ and $dt=1$, so that in this case the algorithm associates landmarks using the distant test instead of the correspondence test. Every landmark at a distance of 1 unit will be automatically associated. Looking at Figure~\ref{fig:test-xia} it can be seen that now all landmarks are correctly associated. However Figure~\ref{fig:test-xib} shows that the estimation has a greater cumulative error. Also, the distant test is faster than the correspondence test, taking only $5[s]$. Therefore a trade-off exists between using the distant test and the correspondence test as a means to solve unknown association.
+
+In~\nameref{sec:test-xii} the pose skip parameter is increase to $ps=100$. the idea is to do as least optimization as possible to increase the algorithm speed. It can be seen however that, due to the lack of optimization, the algorithm is unable to correct the path and to associate the landmarks. This errors also cause that the algorithm actually takes longer than in~\nameref{sec:test-vii}. 
 
 \afterpage{
 \clearpage
@@ -346,9 +351,6 @@ The parameter $dt$ is set to $\infty$ so no distant test is performed. In Table~
 \end{figure}
 }
 %\clearpage
-
-In the next tests the threshold $\chi$ is modified. In~\nameref{sec:test-viii} the threshold is set to a very low value $\chi=10^{-100}$. It can be seen that the algorithm merges non equivalent landmarks, thus causes estimate divergence.
-In~\nameref{sec:test-ix} and \nameref{sec:test-x} $\chi$ is set to 1 and 3 respectively. In these cases the thresholds are so high that the algorithm is unable to associate all the equivalent landmarks. This cause that the estimated path gradually drift.
 
 \afterpage{
 \clearpage
@@ -458,8 +460,6 @@ In~\nameref{sec:test-ix} and \nameref{sec:test-x} $\chi$ is set to 1 and 3 respe
 }
 %\clearpage
 
-In~\nameref{sec:test-xi} $\chi$ gets the value of $\infty$ and $dt=1$, so that in this case the algorithm associates landmarks using the distant test instead of the correspondence test. Every landmark at a distance of 1 unit will be automatically associated. Looking at Figure~\ref{fig:test-xia} it can be seen that now all landmarks are correctly associated. However Figure~\ref{fig:test-xib} shows that the estimation has a greater cumulative error. Also, the distant test is faster than the correspondence test, taking only $5[s]$. Therefore a trade-off exists between using the distant test and the correspondence test as a means to solve unknown association.
-
 \afterpage{
 \clearpage
 \subsubsection{Test XI.}
@@ -495,8 +495,6 @@ In~\nameref{sec:test-xi} $\chi$ gets the value of $\infty$ and $dt=1$, so that i
 \end{figure}
 }
 %\clearpage
-
-In~\nameref{sec:test-xii} the pose skip parameter is increase to $ps=100$. the idea is to do as least optimization as possible to increase the algorithm speed. It can be seen however that, due to the lack of optimization, the algorithm is unable to correct the path and to associate the landmarks. This errors also cause that the algorithm actually takes longer than in~\nameref{sec:test-vii}. 
 
 \afterpage{
 \clearpage
@@ -542,7 +540,7 @@ In this section the correctness of the algorithm is proven for more realistic da
 
 \subsection{Husky a200 Robot}
 
-The first of these test is a Husky a200 Robot simulated in Gazebo. Since this test is still a simulation the groundtruth and the path error can still be retrieved. However, since Gazebo is a more realistic simulation, the nonlinear models of the robot, miss in the detections and false alarms are also simulated. 
+The first of these test is a Husky a200 Robot simulated in Gazebo. Since this test is still a simulation the ground truth and the path error can still be retrieved. However, since Gazebo is a more realistic simulation, the nonlinear models of the robot, miss in the detections and false alarms are also simulated. 
 
 The parameters of the algorithm are presented it Table~\ref{tab:test-xiii}. In this case the information parameters $i_{op}$, $i_{oa}$, and $i_{lp}$ are the assumed uncertainty that better fit the robot model. Since no knowledge was acquired about the robot, these parameters were chosen by trial and error. 
 
@@ -569,12 +567,12 @@ The result are shown in Figure~\ref{fig:test-xiii}. It can be seen that the algo
 \begin{figure}[htbp!]
     \centering
     \begin{subfigure}[b]{\estWidth\textwidth}
-        \includegraphics[width=\textwidth]{imagenes/tests/real/{res_ROS_2015-12-11 19:29:05_it_10_xi_0_op_10000_oa_10000_lp_1000_dsk_1_io_500_ds_100000_dt_0.5_kw_1_ps_10}.pdf}
+        \includegraphics[width=\textwidth]{imagenes/tests/real/{res_ROS_2016-03-15 22:17:42_it_10_xi_0_op_10000_oa_10000_lp_1000_dsk_1_io_500_ds_100000_dt_0.5_kw_1_ps_10}.pdf}
         \caption{Initial guess and solver estimation.}
         \label{fig:test-xiiia}
     \end{subfigure}\\
     \begin{subfigure}[b]{\errorWidth\textwidth}
-        \includegraphics[width=\textwidth]{imagenes/tests/real/{res_ROS_2015-12-11 19:29:05_it_10_xi_0_op_10000_oa_10000_lp_1000_dsk_1_io_500_ds_100000_dt_0.5_kw_1_ps_10_path}.pdf}
+        \includegraphics[width=\textwidth]{imagenes/tests/real/{res_ROS_2016-03-15 22:17:42_it_10_xi_0_op_10000_oa_10000_lp_1000_dsk_1_io_500_ds_100000_dt_0.5_kw_1_ps_10_path}.pdf}
         \caption{Path normalized error.}
         \label{fig:test-xiiib}
     \end{subfigure}
@@ -586,9 +584,9 @@ The result are shown in Figure~\ref{fig:test-xiii}. It can be seen that the algo
 
 \subsection{Parque O'Higgins}
 
-This dataset corresponds to data taken in Parque O'Higgins by a robot from Universidad de Chile. Since this is real data there is no groundtruth with which compare the results. However, the robot was controlled so that it return to the starting position at the end of the path, so it is possible to check the correctness of the algorithm by looking at the robot's final position. Also, since there is no groudtruth there no way to known the correct amount to landmarks in the map.
+This dataset corresponds to data taken in Parque O'Higgins by a robot from Universidad de Chile. Since this is real data there is no ground truth with which compare the robot path. However, ground truth of landmarks (trees in this case) was made by hand using GPS image. Also, the robot was controlled so that it return to the starting position at the end of the path, so it is possible to check the correctness of the algorithm by looking at the robot's final position. 
 
-The results are shown in~\nameref{sec:test-xiv}, along with the parameters used in the test. It can be seen that in the initial guess the robot doesn't return to the starting position (0,0), however it does when the algorithm is applied, thus proving the correctness of the estimate. Due to the large size of the data the algorithm took 4 hours to finish.
+The results are shown in~\nameref{sec:test-xiv}, along with the parameters used in the test. It can be seen that in the initial guess the robot doesn't return to the starting position (0,0), however it does when the algorithm is applied, thus proving the correctness of the estimate. Again the robot is able to detect the landmarks, but a lot of false positive are generated in the process. Due to the large size of the data the algorithm took 4 hours to finish.
 
 \afterpage{
 \clearpage
@@ -610,7 +608,7 @@ The results are shown in~\nameref{sec:test-xiv}, along with the parameters used 
 
 \begin{figure}[htbp!]
     \centering
-    \includegraphics[width=\estWidth\textwidth]{imagenes/tests/real/{res_ohiggins_2015-12-11 23:49:28_it_10_xi_0_op_100000_oa_100000_lp_100_dsk_1_io_500_ds_100000_dt_3_kw_1_ps_10}.pdf}
+    \includegraphics[width=\estWidth\textwidth]{imagenes/tests/real/{res_ohiggins_2016-03-16 07:54:55_it_10_xi_0_op_100000_oa_100000_lp_100_dsk_1_io_500_ds_100000_dt_3_kw_1_ps_10}.pdf}
     \caption{Results for Test XIV.}
     \label{fig:test-xiv}
 \end{figure}
