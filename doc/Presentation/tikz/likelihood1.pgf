@@ -1,0 +1,23 @@
+\newcommand{\bs}{\boldsymbol}
+\newcommand{\opac}{0}
+
+\begin{tikzpicture}
+\node (like) 
+[rectangle, rounded corners, minimum width=3cm, minimum height=0cm,text centered, draw=blue!75, fill=blue!10, thick]
+ at (0,0) {$p(\bs{x}_{0:k},\bs{m}|\bs{z}_{1:k},\bs{u}_{1:k})$};
+
+\node (pose) at (-0.92,0) {};
+\node (map) at (-0.3,0) {};
+\node (meas) at (0.3,0) {};
+\node (odom) at (1.1,0) {};
+
+\node (pose_text) [font=\scriptsize, opacity=\opac] at (-2,1) {pose};
+\node (map_text) [font=\scriptsize, opacity=\opac] at (-0.5,1) {map};
+\node (meas_text) [font=\scriptsize, opacity=\opac] at (0,-1) {measurements};
+\node (odom_text) [font=\scriptsize, opacity=\opac] at (2.3,-1) {odometry};
+
+\draw [->, thick, shorten <=2pt, opacity=\opac] (pose) -- (pose_text);
+\draw [->, thick, shorten <=2pt, opacity=\opac] (map) -- (map_text);
+\draw [->, thick,  shorten <=2pt, opacity=\opac] (meas) -- (meas_text);
+\draw [->, thick,  shorten <=5pt, opacity=\opac] (odom) -- (odom_text);
+\end{tikzpicture}

@@ -1,0 +1,12 @@
+digraph Moible {
+graph[margin=0];
+mobile [label="Mobile Robotics", shape=box, style="rounded,filled", color=black, fillcolor=steelblue1];
+move [label="Move", shape=box, style="rounded,filled", color=black, fillcolor=slategray1];
+explore [label="Explore", shape=box, style="rounded,filled", color=black, fillcolor=slategray1];
+react [label="React", shape=box, style="rounded,filled", color=black, fillcolor=slategray1];
+robust [label="Be robust", shape=box, style="rounded,filled", color=black, fillcolor=slategray1];
+mobile -> move;
+mobile -> explore;
+mobile -> react;
+mobile -> robust;
+}

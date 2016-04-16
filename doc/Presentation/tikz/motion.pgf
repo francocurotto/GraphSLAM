@@ -1,0 +1,29 @@
+\begin{tikzpicture}
+%\draw[help lines] grid(13,7);
+
+\pgfmathdeclarefunction{gauss}{2}{%
+  \pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
+}
+
+\draw [black, fill=orange, ultra thick] (-1,0) rectangle (11,-0.3);
+
+\begin{axis}[at={(297,0)}, hide axis, every axis plot post/.append style={
+  mark=none,domain=-2:2,samples=50,smooth, ultra thick, 
+  draw=cyan!75, fill=cyan!20
+  },
+  enlargelimits=upper]
+\addplot {gauss(0,0.6)};
+\end{axis}
+
+\draw [paint=blue, ultra thick] (0,0) rectangle (1.5,1);
+\draw [draw=gray!75, fill=gray!20, ultra thick] (0.75,0.2) circle [radius=0.4];
+\draw [fill=black, ultra thick] (0.75,0.2) circle [radius=0.01];
+\draw [fill=black, ultra thick] (1.2,0.7) rectangle (1.7,0.8);
+
+\draw [paint=blue, ultra thick] (0+7,0) rectangle (1.5+7,1);
+\draw [draw=gray!75, fill=gray!20, ultra thick] (0.75+7,0.2) circle [radius=0.4];
+\draw [fill=black, ultra thick] (0.75+7,0.2) circle [radius=0.01];
+\draw [fill=black, ultra thick] (1.2+7,0.7) rectangle (1.7+7,0.8);
+
+\draw [ultra thick, ->] (2, 0.5) -- (6.5,0.5);
+\end{tikzpicture}

@@ -1,0 +1,98 @@
+\newcommand{\gridXPos}{12}
+
+\begin{tikzpicture}
+%\draw[help lines] (0,0) grid (12,6); ,
+
+% information matrix
+\draw [step=1cm] (\gridXPos,-2) grid (\gridXPos+8,-2+8);
+% row names
+\node at(\gridXPos-0.5,5.5) {$\boldsymbol{x}_0$};
+\node at(\gridXPos-0.5,4.5) {$\boldsymbol{x}_1$};
+\node at(\gridXPos-0.5,3.5) {$\boldsymbol{x}_2$};
+%\node at(\gridXPos-0.5,2.5) {$\boldsymbol{x}_3$};
+\node at(\gridXPos-0.5,1.5) {$\boldsymbol{m}_1$};
+\node at(\gridXPos-0.5,0.5) {$\boldsymbol{m}_2$};
+\node at(\gridXPos-0.5,-0.5) {$\boldsymbol{m}_3$};
+%\node at(\gridXPos-0.5,-1.5) {$\boldsymbol{m}_4$};
+% column names
+\node at(\gridXPos+0.5,6.5) {$\boldsymbol{x}_0$};
+\node at(\gridXPos+1.5,6.5) {$\boldsymbol{x}_1$};
+\node at(\gridXPos+2.5,6.5) {$\boldsymbol{x}_2$};
+%\node at(\gridXPos+3.5,6.5) {$\boldsymbol{x}_3$};
+\node at(\gridXPos+4.5,6.5) {$\boldsymbol{m}_1$};
+\node at(\gridXPos+5.5,6.5) {$\boldsymbol{m}_2$};
+\node at(\gridXPos+6.5,6.5) {$\boldsymbol{m}_3$};
+%\node at(\gridXPos+7.5,6.5) {$\boldsymbol{m}_4$};
+% squares
+% blues
+\filldraw [fill=blue!40!white, draw=black] (\gridXPos,6) rectangle (\gridXPos+1,5);
+\filldraw [fill=blue!40!white, draw=black] (\gridXPos+1,6) rectangle (\gridXPos+2,5);
+\filldraw [fill=blue!40!white, draw=black] (\gridXPos,5) rectangle (\gridXPos+1,4);
+\filldraw [fill=blue!40!white, draw=black] (\gridXPos+1,5) rectangle (\gridXPos+2,4);
+\filldraw [fill=blue!40!white, draw=black] (\gridXPos+2,5) rectangle (\gridXPos+3,4);
+\filldraw [fill=blue!40!white, draw=black] (\gridXPos+1,4) rectangle (\gridXPos+2,3);
+\filldraw [fill=blue!40!white, draw=black] (\gridXPos+2,4) rectangle (\gridXPos+3,3);
+%\filldraw [fill=blue!40!white, draw=black] (\gridXPos+3,4) rectangle (\gridXPos+4,3);
+%\filldraw [fill=blue!40!white, draw=black] (\gridXPos+2,3) rectangle (\gridXPos+3,2);
+%\filldraw [fill=blue!40!white, draw=black] (\gridXPos+3,3) rectangle (\gridXPos+4,2);
+%purple
+\filldraw [fill=violet!40!white, draw=black] (\gridXPos+4,6) rectangle (\gridXPos+5,5);
+\filldraw [fill=violet!40!white, draw=black] (\gridXPos+4,5) rectangle (\gridXPos+5,4);
+\filldraw [fill=violet!40!white, draw=black] (\gridXPos+5,5) rectangle (\gridXPos+6,4);
+\filldraw [fill=violet!40!white, draw=black] (\gridXPos+6,5) rectangle (\gridXPos+7,4);
+%\filldraw [fill=violet!40!white, draw=black] (\gridXPos+6,4) rectangle (\gridXPos+7,3);
+%\filldraw [fill=violet!40!white, draw=black] (\gridXPos+6,3) rectangle (\gridXPos+7,2);
+%\filldraw [fill=violet!40!white, draw=black] (\gridXPos+7,3) rectangle (\gridXPos+8,2);
+%
+\filldraw [fill=violet!40!white, draw=black] (\gridXPos,2) rectangle (\gridXPos+1,1);
+\filldraw [fill=violet!40!white, draw=black] (\gridXPos+1,2) rectangle (\gridXPos+2,1);
+\filldraw [fill=violet!40!white, draw=black] (\gridXPos+1,1) rectangle (\gridXPos+2,0);
+\filldraw [fill=violet!40!white, draw=black] (\gridXPos+1,0) rectangle (\gridXPos+2,-1);
+%\filldraw [fill=violet!40!white, draw=black] (\gridXPos+2,0) rectangle (\gridXPos+3,-1);
+%\filldraw [fill=violet!40!white, draw=black] (\gridXPos+3,0) rectangle (\gridXPos+4,-1);
+%\filldraw [fill=violet!40!white, draw=black] (\gridXPos+3,-1) rectangle (\gridXPos+4,-2);
+
+% red
+\filldraw [fill=red!40!white, draw=black] (\gridXPos+4,2) rectangle (\gridXPos+5,1);
+\filldraw [fill=red!40!white, draw=black] (\gridXPos+5,1) rectangle (\gridXPos+6,0);
+\filldraw [fill=red!40!white, draw=black] (\gridXPos+6,0) rectangle (\gridXPos+7,-1);
+%\filldraw [fill=red!40!white, draw=black] (\gridXPos+7,-1) rectangle (\gridXPos+8,-2);
+
+% robot poses
+\node[name= x0, robot, shape border rotate=0] at (0,0) {$\boldsymbol{x}_0$};
+\node[name= x1, robot, shape border rotate=0] at (3,0) {$\boldsymbol{x}_1$};
+\node[name= x2, robot, shape border rotate=0] at (6,0) {$\boldsymbol{x}_2$};
+%\node[name= x3, robot, shape border rotate=0] at (9,0) {$\boldsymbol{x}_3$};
+
+% landmarks
+\node[name=m1, landmark] at (1,3) {$\boldsymbol{m}_1$};
+\node[name=m2, landmark] at (3,4) {$\boldsymbol{m}_2$};
+\node[name=m3, landmark] at (5,2) {$\boldsymbol{m}_3$};
+%\node[name=m4, landmark] at (9,3) {$\boldsymbol{m}_4$};
+
+% background layer
+\begin{scope}[on background layer]
+% odometry
+\draw [odometry] (x0.center) -- (x1.center) node[name=odom1, midway] {};;
+\draw [odometry] (x1.center) -- (x2.center) node[name=odom2, midway] {};;
+%\draw [odometry] (x2.center) -- (x3.center) node[name=odom3, midway] {};
+% measurement
+\draw [measurement] (x0.center) -- (m1.center) node[name=meas1, midway] {};;
+\draw [measurement] (x1.center) -- (m1.center) node[name=meas2, midway] {};;
+\draw [measurement] (x1.center) -- (m2.center) node[name=meas3, midway] {};;
+\draw [measurement] (x1.center) -- (m3.center) node[name=meas4, midway] {};;
+%\draw [measurement] (x2.center) -- (m3.center) node[name=meas5, midway] {};;
+%\draw [measurement] (x3.center) -- (m3.center) node[name=meas6, midway] {};
+%\draw [measurement] (x3.center) -- (m4.center) node[name=meas7, midway] {};
+\end{scope}
+
+% lines
+\draw [matrixline] (odom2) .. controls (5,2) and (9,0)  .. (13.5,3.5);
+%\draw [matrixline] (meas6) .. controls (9,2.8) and (11, 2.8)  .. (15.5,-0.5);
+%\draw [matrixline] (meas7) .. controls (12,2) and (9,0) .. (15.5,-1.5);
+%\draw [matrixline] (odom3) .. controls (7,6) .. (14.5,2.5);
+
+% nodes for image correction
+%\node [name=n1] at (0,0) {};
+%\node [name=n1] at (21,0) {};
+\end{tikzpicture}

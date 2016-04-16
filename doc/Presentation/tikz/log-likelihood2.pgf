@@ -1,0 +1,25 @@
+\newcommand{\bs}{\boldsymbol}
+\newcommand{\defi}{\vcentcolon=}
+\newcommand{\Ee}{\mathcal{E}}
+\newcommand{\opac}{100}
+
+\begin{tikzpicture}
+\node (like) 
+[rectangle, rounded corners, minimum width=3cm, minimum height=0cm,text centered, draw=blue!75, fill=blue!10, thick]
+ at (0,0) {$F(\bs{y}) : = \sum\bs{e}_{ij}(\bs{y})^T\bs{\Omega}_{ij} \bs{e}_{ij}(\bs{y})$};
+
+\node (sum) at (-0.6,0.1) {};
+\node (error) at (-0.3,0) {};
+\node (mat) at (0.9,0) {};
+\node (y) at (2,0) {};
+
+\node (sum_text) [align=center, font=\scriptsize, opacity=\opac] at (-2,1) {For all edges\\in graph};
+\node (error_text) [font=\scriptsize, opacity=\opac] at (-0.5,-1) {error function};
+\node (mat_text) [align=center, font=\scriptsize, opacity=\opac]at (0.9,1) {information\\matrix};
+\node (y_text) [font=\scriptsize, opacity=\opac] at (2,-1) {$[\bs{x}_{0:k},\bs{m}]$};
+
+\draw [->, thick, shorten <=2pt, opacity=\opac] (sum) -- (sum_text);
+\draw [->, thick, shorten <=2pt, opacity=\opac] (error) -- (error_text);
+\draw [->, thick,  shorten <=2pt, opacity=\opac] (mat) -- (mat_text);
+\draw [->, thick,  shorten <=2pt, opacity=\opac] (y) -- (y_text);
+\end{tikzpicture}

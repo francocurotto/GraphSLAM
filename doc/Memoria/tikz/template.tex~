@@ -1,0 +1,23 @@
+\documentclass{standalone}
+
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+
+\usetikzlibrary{calc} 
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary[shapes.arrows]
+\usetikzlibrary{backgrounds}
+\tikzset{paint/.style={draw=#1!75, fill=#1!20}}
+\tikzset{robot/.style={draw, isosceles triangle, paint=blue, shape border uses incircle, very thick}}
+\tikzset{landmark/.style={draw, diamond, paint=red, very thick}}
+\tikzset{odometry/.style={ultra thick, color=gray}}
+\tikzset{matrixline/.style={very thick, -*}}
+\tikzset{measurement/.style={ultra thick, color=gray, dashed}}
+\tikzset{gnode/.style={draw, circle, paint=purple, ultra thick, minimum width = 3em}}
+\tikzset{variance/.style={ultra thick, paint=yellow}}
+
+\begin{document}
+<>
+\end{document}

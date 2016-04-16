@@ -1,0 +1,47 @@
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, very thick, draw=red!75, fill=red!20]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, very thick, draw=blue!75, fill=blue!20]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, very thick, draw=blue!75, fill=blue!20]
+\tikzstyle{decision} = [diamond, aspect=2, minimum width=3cm, minimum height=1cm, text centered, very thick, draw=green!75, fill=green!20]
+\tikzstyle{end} = [circle, text centered, draw=black, very thick, draw=red!75, fill=red!20]
+\tikzstyle{arrow} = [very thick,->,>=stealth]
+
+\begin{tikzpicture}%[node distance=2cm]
+\node (start) [startstop] {Initialization};
+
+\node (set-param) [right of=start, xshift=3cm, yshift=0.8cm] {Set parameters}; \draw [thick] (start) -- (set-param.west);
+\node (load-data) [anchor=west, yshift=-0.5cm] at (set-param.west) {Load data}; \draw [thick] (start) -- (load-data.west);
+\node (init-guess) [anchor=west, yshift=-0.5cm] at (load-data.west) {Generate initial guess}; \draw [thick] (start) -- (init-guess.west);
+\node (pose-init) [anchor=west, yshift=-0.5cm] at (init-guess.west) {Set pose $p=0$}; \draw [thick] (start) -- (pose-init.west);
+
+\node (final-p) [decision, below of=start, yshift=-1cm] {Is $p$ final pose?};
+\draw [arrow] (start) -- (final-p);
+
+\node(incremental) [process, below of=final-p, yshift=-1cm, align=center] {Incremental\\Data Association($p$)}; 
+\draw [arrow] (final-p) -- node[anchor=west]{no} (incremental);
+
+\node (optimize-dec) [decision, below of=incremental, yshift=-1cm, align=center, opacity=0] {Time for\\optimize ($ps$)?};
+\draw [arrow, opacity=0] (incremental) -- (optimize-dec);
+
+\node(optimize) [process, below of=optimize-dec, yshift=0cm, xshift=4cm, align=center, opacity=0] {Optimize($it$)}; 
+\draw [arrow, opacity=0] (optimize-dec) -| node[anchor=south] {yes} (optimize);
+
+\node (full-dec) [decision, below of=optimize-dec, yshift=-2.5cm, align=center, opacity=0] {Time for full\\optimization ($io$)?};
+\draw [arrow, opacity=0] (optimize-dec) -- node[anchor=south west] {no} (full-dec);
+\draw [very thick, opacity=0] (optimize) |- ($(full-dec)+(0,1.6)$);
+
+\node(full) [process, below of=full-dec, yshift=0cm, xshift=4cm, align=center, opacity=0] {Full Optimization($p$)}; 
+\draw [arrow, opacity=0] (full-dec) -| node[anchor=south] {yes} (full);
+%\draw [arrow, opacity=0] (full) -- ($(full)+(0,-1)$) -- ($(full)+(-7,-1)$) |- (final-p);
+%\draw [very thick, opacity=0] (full-dec) -- ($(full-dec)+(0,-2)$);
+
+\node(next) [process, below of=full-dec, yshift=-1cm, xshift=-3cm, align=center, opacity=0] {$p=p+1$}; 
+\draw [arrow, opacity=0] (full-dec) |- node[anchor= south west] {no}  (next);
+\draw [arrow, opacity=0] (full) |- (next);
+\draw [arrow, opacity=0] (next) |- (final-p);
+
+\node (end) [end, right of=final-p, xshift=3cm] {End}; 
+\draw[arrow] (final-p) -- node[anchor=south] {yes} (end);
+
+
+
+\end{tikzpicture}

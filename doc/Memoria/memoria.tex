@@ -7,7 +7,7 @@
 \author{FRANCO ANDREAS CUROTTO MOLINA}
 \title{GRAPHSLAM ALGORITHM IMPLEMENTATION FOR SOLVING SIMULTANEOUS LOCALIZATION AND MAPPING}
 \auspicio{}
-\date{DICIEMBRE 2015}
+\date{MARZO 2016}
 \guia{MARTIN ADAMS}
 \carrera{INGENIERO CIVIL ELÉCTRICO}
 \memoria{MEMORIA PARA OPTAR AL TÍTULO DE}
@@ -24,18 +24,31 @@
 \maketitle
 
 \begin{abstract}
-SLAM (Simultaneous Localization and Mapping) is the problem of concurrently estimating a robot's (or other agent's) position and the map being generated of the environment. It is considered to be a core concept in mobile robotics, and a fundamental one to achieve truly autonomous systems. 
+SLAM (Simultaneous Localization and Mapping) es el problema de estimar la posición de un robot (u otro agente), y simultáneamente, generar un mapa de su entorno. Es considerado un concepto clave en la robótica móvil, y fundamental para alcanzar sistemas verdaderamente autónomos.
 
-Among the many solutions that have been proposed for solving SLAM, graph based approaches have gained significant interest from researches in the recent years. These solutions present various advantages, such as, the capability to handle large amounts of data, and to retrieve the complete robot trajectory, rather than just the last position. A particular implementation of this approach is the GraphSLAM algorithm, first presented by Thrun and Montemerlo in 2006.
+Entre las muchas soluciones que se han propuesto para resolver SLAM, los métodos basados en grafos han adquirido gran interés por parte de los investigadores en los últimos años. Estas soluciones presentan varias ventajas, como la habilidad de manejar grandes cantidades de datos, y conseguir la trayectoria completa del robot, en vez de solo la última posición. Una implementación particular de este método es el algoritmo GraphSLAM, presentado por primera vez por Thrun y Montemerlo en 2006.  
 
-In this thesis a GraphSLAM algorithm is implemented for solving the SLAM problem in a two dimensional scenario. The main objective of this work is to provide a widely accepted SLAM solution for making benchmark comparisons to newer SLAM algorithms. The implementation uses the g$^2$o framework as a tool for nonlinear least squares optimization.
+En esta memoria, el algoritmo GraphSLAM es implementado para resolver el problema de SLAM en el caso de dos dimensiones. En objetivo principal de esta memoria es proveer de una solución de SLAM ampliamente aceptada para la realización de pruebas comparativas con nuevos algoritmos de SLAM. La implementación usa el framework g$^2$o como herramienta para la optimización de mínimos cuadrados no lineales.
 
-The GraphSLAM implementation is able to solve SLAM with known and unknown data association. This means that even when the robot has no knowledge of the origin of measurements, it can associate measurements to states by means of probabilistic estimation. The algorithm also uses a kernel-based method for robust estimation against outliers. In order to improve the algorithm's computational time, several strategies were designed to efficiently test the association between landmarks, and run the optimizations. 
+La implementación de GraphSLAM es capaz de resolver SLAM con asociación de datos conocida y desconocida. Esto significa que, incluso cuando el robot no tiene conocimiento del origen de las mediciones, éste puede asociar las mediciones a los estados correspondientes, mediante el uso de estimación probabilística. El algoritmo también usa un método basado en kernel para la estimación robusta ante \it{outliers}. Para mejorar el tiempo de cómputo del algoritmo, varias estrategias fueron diseñadas para verificar las asociaciones y ejecutar el algoritmo de manera eficiente. 
 
-The final implementation was tested with simulated and actual data, in the case of known and unknown data association. It worked successfully in all the test cases, being able to estimate the robot path and the environment map with small error. The main advantages of the algorithm are the high accuracy, and the 
-high level of customization to a wide range of scenarios given by its parameters selection. The major drawbacks are the algorithm's computational time for large dataset, and the inability to deal with large amounts of false alarms. 
+La implementación final se probó con datos simulados y reales, en el caso de asociación conocida y desconocida. El algoritmo fue exitoso en todas las pruebas, siendo capaz de estimar la trayectoria del robot y el mapa del entorno con un error pequeño. Las principales ventajas del algoritmo son su alta precisión, y su alto grado de configuración dado por la selección de parámetros. Las mayores desventajas son el tiempo de cómputo del algoritmo cuando la cantidad de datos es alta, y su incapacidad de eliminar falsos positivos.  
 
-Finally, future work is suggested to improve the current performance. In particular, modifications are suggested to increase convergence speed, and for dealing with false positives.   
+Finalmente, como trabajo futuro, se sugieren modificaciones para aumentar la velocidad de convergencia, y para eliminar falsos positivos.
+\end{abstract}
+
+\begin{abstract}
+SLAM (Simultaneous Localization and Mapping) is the problem of estimating a robot's (or other agent's) position and simultaneously generate a map of its environment. It is considered to be a core concept in mobile robotics, and a fundamental one to achieve truly autonomous systems. 
+
+Among the many solutions that have been proposed for solving SLAM, graph-based approaches have gained significant interest from researchers in the recent years. These solutions present various advantages, such as the capability to handle large amounts of data, and to retrieve the complete robot trajectory, rather than just the last position. A particular implementation of this approach is the GraphSLAM algorithm, first presented by Thrun and Montemerlo in 2006.
+
+In this thesis, the GraphSLAM algorithm is implemented for solving the SLAM problem in a two dimensional scenario. The main objective of this work is to provide a widely accepted SLAM solution for making benchmark comparisons to newer SLAM algorithms. The implementation uses the g$^2$o framework as a tool for nonlinear least squares optimization.
+
+The GraphSLAM implementation is able to solve SLAM with known and unknown data association. This means that even when the robot has no knowledge of the origin of measurements, it can associate measurements to corresponding states, by means of probabilistic estimation. The algorithm also uses a kernel-based method for robust estimation against outliers. In order to improve the algorithm's computation time, several strategies were designed to efficiently test the association between landmarks and run the optimizations. 
+
+The final implementation was tested with simulated and real data, in the case of known and unknown data association. It worked successfully in all the test cases, being able to estimate the robot path and the environment map with small error. The main advantages of the algorithm are the high accuracy and the high level of customization given by its parameters selection. The major drawbacks are the algorithm's computation time for large datasets, and the inability to remove false alarms. 
+
+Finally, as future work, modifications are suggested to increase convergence speed, and for dealing with false positives. 
 \end{abstract}
 
 \begin{dedicatoria} % opcional
@@ -43,9 +56,9 @@ A mi familia
 \end{dedicatoria}
 
 \begin{thanks} % opcional
-I would like to thank professor Martin Adams for giving me the opportunity to work in the thrilling and challenging field of robotics. This project has given me a very useful experience about the scientific investigation, and work in general.
+I would like to thank professor Martin Adams for giving me the opportunity to work in the thrilling and challenging field of robotics. This project has given me a very useful experience about the scientific investigation and work in general.
 
-I would also like to thank my co-workers in the AMTC laboratory, especially Keith Leung and Felipe Inostroza. Your constant help, support and review of my work allowed me to make a much better project than I could have achieved on my own. Also, thank you for providing me with sample codes and datasets for the project. It made my work much easier.
+I would also like to thank my co-workers in the AMTC laboratory, especially Keith Leung and Felipe Inostroza. Your constant help, support, and review of my work allowed me to make a much better project than I could have achieved on my own. Also, thank you for providing me with sample codes and datasets for the project. It made my work much easier.
 \end{thanks}
 \cleardoublepage
 
