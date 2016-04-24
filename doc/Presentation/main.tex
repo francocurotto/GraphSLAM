@@ -457,25 +457,80 @@ The Final Algorithm}
 \end{columns}
 \end{frame}
 
+% \begin{frame}{The Final Algorithm}
+% \begin{algorithm}[H]
+%     \caption{Incremental Data Association Function}
+%     \begin{algorithmic}[1]
+%         \Function{incrementalDataAssociation}{$p$}
+%         \ForAll {landmarks $l_p$ observed in $p$}
+%         \ForAll {previous poses $q$ up to $p$}
+%         \ForAll {landmarks $l_q$ observed in $q$}
+%         \If {distance($l_p$,$l_q$) $\textless$ $dt$}
+%         \If{correspondenceTest($i$,$j$) $\geq \chi$} 
+%         \State optimizer.merge($i$,$j$) 
+%         \EndIf
+%         \EndIf
+%         \EndFor
+%         \EndFor
+%         \EndFor
+%         \EndFunction
+%     \end{algorithmic}
+% \end{algorithm}
+% \end{frame}
+
+\SetKwProg{Fn}{Function}{}{}
+\SetAlFnt{\sffamily}
+\renewcommand\ArgSty{\normalfont\sffamily}
+\renewcommand\KwSty[1]{\textnormal{\textbf{\sffamily#1}}\unskip}
+\SetAlCapFnt{\normalfont\sffamily\large}
+\renewcommand\AlCapNameFnt{\sffamily\large}
+
+%%% vertical rules in cyan color
+\makeatletter
+\renewcommand{\algocf@Vline}[1]{%     no vskip in between boxes but a strut to separate them, 
+  \strut\par\nointerlineskip% then interblock space stay the same whatever is inside it
+  \algocf@push{\skiprule}%        move to the right before the vertical rule
+  \hbox{\bgroup\color{cyan}\vrule\egroup%
+    \vtop{\algocf@push{\skiptext}%move the right after the rule
+      \vtop{\algocf@addskiptotal #1}\bgroup\color{cyan}\Hlne\egroup}}\vskip\skiphlne% inside the block
+  \algocf@pop{\skiprule}%\algocf@subskiptotal% restore indentation
+  \nointerlineskip}% no vskip after
+%
+\renewcommand{\algocf@Vsline}[1]{%    no vskip in between boxes but a strut to separate them, 
+  \strut\par\nointerlineskip% then interblock space stay the same whatever is inside it
+  \algocf@bblockcode%
+  \algocf@push{\skiprule}%        move to the right before the vertical rule
+  \hbox{\bgroup\color{cyan}\vrule\egroup%               the vertical rule
+    \vtop{\algocf@push{\skiptext}%move the right after the rule
+      \vtop{\algocf@addskiptotal #1}}}% inside the block
+  \algocf@pop{\skiprule}% restore indentation
+  \algocf@eblockcode%
+}
+%
+\makeatother
+
 \begin{frame}{The Final Algorithm}
+\begin{columns}
+\column{0.95\textwidth}
+%\hspace{1em} ~ \phantom{W}
 \begin{algorithm}[H]
-    \caption{Incremental Data Association Function}
-    \begin{algorithmic}[1]
-        \Function{incrementalDataAssociation}{$p$}
-        \ForAll {landmarks $l_p$ observed in $p$}
-        \ForAll {previous poses $q$ up to $p$}
-        \ForAll {landmarks $l_q$ observed in $q$}
-        \If {distance($l_p$,$l_q$) $\textless$ $dt$}
-        \If{correspondenceTest($i$,$j$) $\geq \chi$} 
-        \State optimizer.merge($i$,$j$) 
-        \EndIf
-        \EndIf
-        \EndFor
-        \EndFor
-        \EndFor
-        \EndFunction
-    \end{algorithmic}
+ \Fn{incrementalDataAssocioation (pose $p$)}{
+  \ForAll{landmarks $l_p$ observed in $p$}{
+   \ForAll{previous poses $q$ up to $p$}{
+    \ForAll{landmarks $l_q$ observed in $q$}{
+     \If{distance($l_p$,$l_q$) $\textless$ $dt$}{
+      \If{correspondenceTest($l_p$,$l_q$) $\geq \chi$}{
+       optimizer.merge($l_p$,$l_q$)
+      }
+     }
+    }
+   }
+  }
+ }
+ \textbf{end}
+ \caption{Incremental Data Association}
 \end{algorithm}
+\end{columns}
 \end{frame}
 
 \begin{frame}{Results - Simulation - Known Data Association}
