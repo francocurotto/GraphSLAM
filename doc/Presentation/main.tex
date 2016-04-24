@@ -41,26 +41,26 @@
 % \item My work is ... in the field of robotics
 % }
 
-\begin{frame}{Motivation}
-\begin{columns}[T]
-\column{0.5\textwidth}
-\centering
-\textbf{Robots Before}\\
-\vspace{1em}
-\includegraphics[height=0.37\textheight]{img/assembly.jpg}\\
-\vspace{1em}
-\includegraphics[height=0.37\textheight]{img/timbot.jpg}
-\pause
-\column{0.5\textwidth}
-\centering
-\vspace{-2pt}
-\textbf{Robots Today}\\
-\vspace{1em}
-\includegraphics[height=0.37\textheight]{img/selfdriving.jpg}\\
-\vspace{1em}
-\includegraphics[height=0.37\textheight]{img/atlas2.png}
-\end{columns}
-\end{frame}
+% \begin{frame}{Motivation}
+% \begin{columns}[T]
+% \column{0.5\textwidth}
+% \centering
+% \textbf{Robots Before}\\
+% \vspace{1em}
+% \includegraphics[height=0.37\textheight]{img/assembly.jpg}\\
+% \vspace{1em}
+% \includegraphics[height=0.37\textheight]{img/timbot.jpg}
+% \pause
+% \column{0.5\textwidth}
+% \centering
+% \vspace{-2pt}
+% \textbf{Robots Today}\\
+% \vspace{1em}
+% \includegraphics[height=0.37\textheight]{img/selfdriving.jpg}\\
+% \vspace{1em}
+% \includegraphics[height=0.37\textheight]{img/atlas2.png}
+% \end{columns}
+% \end{frame}
 
 % \note[itemize]{
 % \item Robots in the past were restricted to do simple, repetitive tasks, and were either stationary [reference photo], or had limited mobility, usually by following a reference [reference photo]. 
@@ -112,11 +112,11 @@ We have (information):
 \begin{itemize}
 \item Robot odometry
 \item Landmarks measurements
-\item[] ~
 \end{itemize}
 \vspace{1em}
 \centering
-\includegraphics[height=7em]{img/encoder.png}
+%\includegraphics[height=7em]{img/encoder.png}
+\includegraphics[width=\textwidth]{tikz/landmark.pdf}\\
 \column{0.5\textwidth}
 We need (states):
 \begin{itemize}
@@ -126,9 +126,10 @@ We need (states):
                $\left.\rule{0pt}{1.1\normalbaselineskip}\right\}$ Robot pose}}
 \item Landmarks position
 \end{itemize}
-\vspace{1em}
+\vspace{42pt}
 \centering
-\includegraphics[height=7em]{img/laser-rangefinder.jpg}
+%\includegraphics[height=8em]{img/Hokuyo-UST-20LX.jpg}
+\includegraphics[width=\textwidth]{tikz/odometry.pdf}\\
 \end{columns}
 % \begin{block}{Odometry and Measurements}
 % Sensors can be used to:
@@ -165,7 +166,7 @@ Motion Model:
 \end{equation*}  
 \centering
 \includegraphics[width=0.47\textwidth]{tikz/motion.pdf}\\
-\pause
+%\pause
 \raggedright
 Measurement Model:
 \begin{equation*}
@@ -243,7 +244,7 @@ Using models in $-\log(p(\bs{y}|\bs{z}_{1:k},\bs{u}_{1:k}))$:
 \includegraphics<1-3>[width=0.5\textwidth]{tikz/log-likelihood1.pdf}
 \includegraphics<4->[width=0.5\textwidth]{tikz/log-likelihood2.pdf}
 \end{center}
-We need the maximum of this equation.}
+We need the minimum of this expression.}
 
 % \begin{block}{}
 % \begin{itemize}
@@ -338,34 +339,34 @@ Information matrix $\bs{H}$ is intrinsically \textit{\textbf{sparse}}.
 \includegraphics<10>[width=\textwidth]{tikz/matrix10.pdf}
 \end{frame}
 
-\begin{frame}{g$^2$o Protocol}
-\begin{center}
-\includegraphics<1>[width=0.7\textwidth]{tikz/protocol1.pdf}
-\includegraphics<2>[width=0.7\textwidth]{tikz/protocol2.pdf}
-\includegraphics<3>[width=0.7\textwidth]{tikz/protocol3.pdf}
-
-\fontsize{8.5}{10.2}\selectfont
-%\scriptsize
-\begin{tabular}{|c|l|}
-\hline
-Graph Element & Notation\\
-\hline
-\onslide<1->{
-Pose Node & \texttt{VERTEX\_SE2 id x y a}\\
-Landmark Node & \texttt{VERTEX\_XY id x y}\\
-Fix a Node & \texttt{FIX id}\\}
-\onslide<2->{Odometry Edge} & \onslide<2->{\texttt{EDGE\_SE2 id1 id2 dx dy da ipxx ipxy ipxa ipyy ipya ipaa}}\\
-\onslide<3->{Measurement Edge} & \onslide<3->{\texttt{EDGE\_SE2\_XY id1 id2 dx dy ilxx ilxy ilyy}}\\
-\hline
-\end{tabular}
-\onslide<2->{
-\normalsize 
-\begin{block}{}
-One must specify the information matrix of edges.
-\end{block}}
-\end{center}
-\end{frame}
-
+% \begin{frame}{g$^2$o Protocol}
+% \begin{center}
+% \includegraphics<1>[width=0.7\textwidth]{tikz/protocol1.pdf}
+% \includegraphics<2>[width=0.7\textwidth]{tikz/protocol2.pdf}
+% \includegraphics<3>[width=0.7\textwidth]{tikz/protocol3.pdf}
+% 
+% \fontsize{8.5}{10.2}\selectfont
+% %\scriptsize
+% \begin{tabular}{|c|l|}
+% \hline
+% Graph Element & Notation\\
+% \hline
+% \onslide<1->{
+% Pose Node & \texttt{VERTEX\_SE2 id x y a}\\
+% Landmark Node & \texttt{VERTEX\_XY id x y}\\
+% Fix a Node & \texttt{FIX id}\\}
+% \onslide<2->{Odometry Edge} & \onslide<2->{\texttt{EDGE\_SE2 id1 id2 dx dy da ipxx ipxy ipxa ipyy ipya ipaa}}\\
+% \onslide<3->{Measurement Edge} & \onslide<3->{\texttt{EDGE\_SE2\_XY id1 id2 dx dy ilxx ilxy ilyy}}\\
+% \hline
+% \end{tabular}
+% \onslide<2->{
+% \normalsize 
+% \begin{block}{}
+% One must specify the information matrix of edges.
+% \end{block}}
+% \end{center}
+% \end{frame}
+% 
 \begin{frame}{Correspondence Problem}
 
 \begin{columns}
@@ -509,30 +510,30 @@ $n_p$ & $n_l$ & $i_{op}$ & $i_{oa}$ & $i_{lp}$ & $it$ & $k_w$ & $\chi$ & $dt$ & 
 \end{center}
 \end{frame}
 
-\begin{frame}{Results - Real Data - Husky a200 ROS Simulation}
-\begin{center}
-\small 
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-$n_p$ & $n_l$ & $i_{op}$ & $i_{oa}$ & $i_{lp}$ & $it$ & $k_w$ & $\chi$ & $dt$ & $io$ & $ps$ & $t$\\
-\hline \hline
-4700 & 18 & 10000 & 10000 & 1000 & 10 & 1 & $\infty$ & 0.5 & 500 & 10 & $3[min]$\\
-\hline 
-\end{tabular}
-\begin{overprint}[\textwidth]
-\onslide<1>
-\centering
-\vspace{3em}
-\includegraphics[height=0.5\textheight]{img/husky.jpg}
-\onslide<2>
-\centering
-\includegraphics[height=0.72\textheight]{tests/{res_ROS}.png}
-\onslide<3>
-\centering
-\includegraphics[height=0.72\textheight]{tests/{res_ROS_path}.pdf}
-\end{overprint}
-\end{center}
-\end{frame}
+% \begin{frame}{Results - Real Data - Husky a200 ROS Simulation}
+% \begin{center}
+% \small 
+% \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+% \hline
+% $n_p$ & $n_l$ & $i_{op}$ & $i_{oa}$ & $i_{lp}$ & $it$ & $k_w$ & $\chi$ & $dt$ & $io$ & $ps$ & $t$\\
+% \hline \hline
+% 4700 & 18 & 10000 & 10000 & 1000 & 10 & 1 & $\infty$ & 0.5 & 500 & 10 & $3[min]$\\
+% \hline 
+% \end{tabular}
+% \begin{overprint}[\textwidth]
+% \onslide<1>
+% \centering
+% \vspace{3em}
+% \includegraphics[height=0.5\textheight]{img/husky.jpg}
+% \onslide<2>
+% \centering
+% \includegraphics[height=0.72\textheight]{tests/{res_ROS}.png}
+% \onslide<3>
+% \centering
+% \includegraphics[height=0.72\textheight]{tests/{res_ROS_path}.pdf}
+% \end{overprint}
+% \end{center}
+% \end{frame}
 
 \begin{frame}{Results - Real Data - Parque O'Higgins}
 \begin{center}
