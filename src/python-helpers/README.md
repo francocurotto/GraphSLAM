@@ -16,11 +16,11 @@ my-slam.py constains the test for each case, run and modify it at will.
 - g2oIterations: number of iteration for the optimization algorithm.
 - xi: data association threshold.
 - nlandmarks: number of landmarks in map (simulation only).
-- infoOdomPos: information parmameter for odometry position, in x and y (for real data: assumed information).
-- infoOdomAng: information parmameter for odometry angle (for real data: assumed information).
-- infoPointSen: information parmameter for measurements, in x and y (for real data: assumed information).
+- infoOdomPos: information parameter for odometry position, in x and y (for real data: assumed information).
+- infoOdomAng: information parameter for odometry angle (for real data: assumed information).
+- infoPointSen: information parameter for measurements, in x and y (for real data: assumed information).
 - kernelWidth: width of kernel.
-- dataSkip: Frequency of skiped data (used to reduce dataset size, 1: no skip).
+- dataSkip: Frequency of ignored data (used to reduce dataset size, 1: no skip).
 - interOpt: Number of poses between full optimizations. Used to control the frequency of full optimization (1: full optimization for every pose).
 - dataSize: Number of poses to consider from the dataset (set to the total number of poses of more to consider all the data).
 - simSteps: robot path steps (simulation only).
