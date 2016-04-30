@@ -32,15 +32,15 @@ from OHigginsRaw2g2o import *
 from victoriaRaw2g2o import *
     
 # variables
-g2oIterations = 10
+g2oIterations = 15
 xi = 0
-infoOdomPos = 100000
+infoOdomPos = 8000
 infoOdomAng = 100000
-infoPointSen = 100
+infoPointSen = 5
 dataSkip = 1
 interOpt = 500
 dataSize = 100000
-disTest = 3
+disTest = 5
 kernelWidth = 1
 poseSkip = 10
 
